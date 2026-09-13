@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
+import React from 'react';
 import BotaoDinamico from "./components/BotaoDinamico";
 import Alerta from "./components/Alerta";
 import CardProduto from './components/CardProduto.jsx';
+import Interruptor from './components/Interruptor.jsx';
+import CardProdutoMUI from './components/CardProdutoMUI';
 
 export default function App() {
   const [count, setCount] = useState(0);
@@ -71,7 +74,19 @@ export default function App() {
           {mensagem}
         </p>
       )}
-      
+
+      {/* Interruptor */}
+      <h1>Atividade 5: Hook Personalizado</h1>
+      <Interruptor />
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '40px' }}>
+        {/* Renderizando o componente e passando as props */}
+        <CardProdutoMUI
+          imagem="https://images.unsplash.com/photo-1559525839-b184a4d698c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=345&q=80"
+          nome="Xícara de Café"
+          descricao="Uma xícara de café de alta qualidade para começar bem o seu dia."
+          preco="R$ 25,00"
+        />
+      </div>
     </>
-  )
+  );
 }
