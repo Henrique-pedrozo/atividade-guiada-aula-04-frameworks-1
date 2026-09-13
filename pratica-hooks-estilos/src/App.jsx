@@ -1,122 +1,77 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import BotaoDinamico from "./components/BotaoDinamico";
+import Alerta from "./components/Alerta";
+import CardProduto from './components/CardProduto.jsx';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [count, setCount] = useState(0);
+  const [mensagem, setMensagem] = useState('');
 
+  // Este efeito será executado SEMPRE que o estado 'count' for alterado.
+  useEffect(() => {
+    console.log('EFEITO EXECUTADO: O contador mudou para', count);
+    // Efeito 1: Atualizar o título da aba do navegador.
+
+    document.title = `Cliques: ${count}`;
+    // Efeito 2: Exibir uma mensagem de confirmação temporária.
+
+    if (count > 0) {
+      setMensagem('Contador atualizado com sucesso!');
+      // Agenda a remoção da mensagem após 2 segundos.
+
+      const timer = setTimeout(() => {
+        setMensagem('');
+      }, 2000);
+
+      // A função de limpeza será executada antes da próxima
+      // execução do efeito ou quando o componente for desmontado.
+
+      return () => {
+        console.log('LIMPANDO O TIMER ANTERIOR');
+        clearTimeout(timer);
+      };
+    }
+  }, [count]); // Só execute o efeito se 'count' mudar.
+
+  console.log('COMPONENTE RENDERIZADO');
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      <h1>Aula Prática - Ciclo 4</h1>
+      {/* Botão dinamico */}
 
-      <div className="ticks"></div>
+      <h1>Atividade 1: Botão com Estilo Dinâmico</h1>
+      <BotaoDinamico />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      {/* Alerta */}
+      <h1>Atividade 2: Alertas com CSS Modules</h1>
+      {/* Passamos 'type' e 'message' como props. */}
+      <Alerta
+        type="sucesso"
+        message="Operação realizada com sucesso!"
+      />
+      <Alerta
+        type="erro"
+        message="Falha ao processar a requisição."
+      />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+      {/* Card Produto */}
+      <h1>Atividade 3: Styled Components</h1>
+      <CardProduto nome="Café Especial" preco="45,00" />
+
+      {/* Contador */}
+      <h1>Atividade 4: useEffect em Ação</h1>
+      <p>Você clicou {count} vezes</p>
+
+      <button onClick={() => setCount(count + 1)}>
+        Clique aqui
+      </button>
+
+      {mensagem && (
+        <p style={{ color: 'green', marginTop: '10px' }}>
+          {mensagem}
+        </p>
+      )}
+      
     </>
   )
 }
-
-export default App

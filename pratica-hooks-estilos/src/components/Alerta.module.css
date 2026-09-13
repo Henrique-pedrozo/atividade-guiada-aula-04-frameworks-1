@@ -1,0 +1,19 @@
+/* src/components/Alerta.module.css */
+/* Estes estilos só serão aplicados onde forem importados. */
+.alertaCard {
+    padding: 1rem;
+    border-radius: 8px;
+    color: white;
+    max-width: 300px;
+    margin-top: 1rem;
+}
+
+.sucesso {
+    background-color: #16A34A;
+    /* Verde */
+}
+
+.erro {
+    background-color: #DC2626;
+    /* Vermelho */
+}
